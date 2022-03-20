@@ -11,7 +11,6 @@
   <div class="page">
     <header class="header">
       <a href="#" class="header__logo"></a>
-      <div class="header__line"></div>
     </header>
 
     <main class="content">
@@ -79,9 +78,9 @@
       <div class="popup__content">
         <button class="popup__close-button" aria-label="Close" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__container popup__container_indents" name="popup__container">
-          <input class="popup__name" name="popup__name" type ="text" placeholder="Имя">
-          <input class="popup__job" name="popup__job" type ="text" placeholder="О себе">
+        <form class="popup__container" name="form-edit">
+          <input class="popup__input popup__input_type_name" name="name" type ="text" placeholder="Имя">
+          <input class="popup__input popup__input_type_about" name="about" type ="text" placeholder="О себе">
           <button class="popup__button" type ="submit">Сохранить</button>
         </form>
       </div>
