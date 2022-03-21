@@ -8,7 +8,7 @@
     top: -40px;
     cursor: pointer;
     border: none;
-    background-color: #000;
+    background-color: transparent;
     transition: opacity 0.3s linear 0.1s;
     padding: 0;
 }
