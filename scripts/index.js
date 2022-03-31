@@ -26,8 +26,8 @@ const initialCards = [
   }
 ]; 
 
-const popupEdit = document.querySelector('.popup__edit');
-const popupPlus = document.querySelector('.popup__plus');
+const popupEdit = document.querySelector('.popup_edit');
+const popupPlus = document.querySelector('.popup_plus');
 const closeButtonPlus = popupPlus.querySelector('.popup__close-button');
 let formElementPlus = popupPlus.querySelector('.popup__container_add');
 let titleInputPlus = formElementPlus.querySelector('.popup__input_type_title');
@@ -46,7 +46,7 @@ const elementImage = document.querySelector('.element__image');
 const popupPhotoContainer = document.querySelector('.popup__photo-container');
 const popupPhoto = document.querySelector('.popup__photo');
 const popupPhotoName = document.querySelector('.popup__photo-name');
-const popupOpenPhoto = document.querySelector('.popup__open-photo');
+const popupOpenPhoto = document.querySelector('.popup_open-photo');
 const closeButtonPhoto = popupOpenPhoto.querySelector('.popup__close-button');
 
 const createCards = (photoName, photoLink) => {
