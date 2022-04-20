@@ -119,7 +119,6 @@ function editPopup() {
   jobInputEdit.value = profileSubtitle.textContent;
   popupButtonEdit.disabled = false;
   popupButtonEdit.classList.remove('popup__button_disabled');
-  formElementEdit.classList.remove('popup__input_type_error');
   openPopup(popupEdit);
 }
 
