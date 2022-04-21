@@ -106,6 +106,7 @@ formElementEdit.addEventListener('submit', handleProfileFormSubmit);
 // создания нового места
 function addCardPlace() {
   openPopup(popupCard);
+  popupButtonCard.classList.add('popup__button_disabled');
   popupButtonCard.disabled = true;
 }
 buttonPlus.addEventListener('click', addCardPlace);
@@ -119,7 +120,6 @@ const closeByEscape = (event) => {
 }
 
 function openPopup(popup) {
-  popupButtonCard.classList.add('popup__button_disabled');
   popup.classList.add('popup_opened');
   document.addEventListener('keyup', closeByEscape);
 }
