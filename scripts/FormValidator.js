@@ -9,12 +9,12 @@ export class FormValidator{
  
          this._buttonElement = this._formElement.querySelector(this._object.submitButtonSelector);
  
-         this._toggleButtonState();
+         this.toggleButtonState();
  
          this._inputList.forEach((inputElement) => {
              inputElement.addEventListener('input', () => {
                  this._isValid(inputElement);
-                 this._toggleButtonState(this._inputList, this._buttonElement);
+                 this.toggleButtonState(this._inputList, this._buttonElement);
              });
          });
      }; 
@@ -41,7 +41,7 @@ export class FormValidator{
         });
       };
 
-    _toggleButtonState(){
+    toggleButtonState(){
         if (this._hasInvalidInput(this._inputList)) {
         this._buttonElement.classList.add(this._object.inactiveButtonClass);
         this._buttonElement.disabled = true;
@@ -50,6 +50,14 @@ export class FormValidator{
         this._buttonElement.disabled = false; 
     }
 };
+
+    resetValidator() {
+        this.toggleButtonState(this._inputList, this._buttonElement);
+
+        this._inputList.forEach((inputElement) => {
+            this._hideInputError(inputElement);
+        });
+    };
 
     _isValid(inputElement){
         if (!inputElement.validity.valid) {
@@ -60,13 +68,9 @@ export class FormValidator{
     };
 
     enableValidation() {
-        const formList = Array.from(document.querySelectorAll(this._object.formSelector));
-
-        formList.forEach((_formElement) => {
-            this._formElement.addEventListener("submit", (evt) => {
-                evt.preventDefault();
-              });
-              this._setEventListeners();
+        this._formElement.addEventListener("sumbit", (evt) => {
+            evt.preventDefault();
         });
+        this._setEventListeners();
     };
 };

@@ -37,11 +37,12 @@
     };
 
     _handleHeartClick() {
-      this._element.querySelector('.element__heart').classList.toggle('element__heart_active');
+      this._elementHeart.classList.toggle('element__heart_active');
     };
 
     _handleRemoveClick() {
       this._element.remove();
+      this._element = null;
     };
 
     _handleOpenImagePopupClick(){

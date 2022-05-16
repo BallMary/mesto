@@ -1,3 +1,4 @@
+const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_edit');
 const formElementEdit = popupEdit.querySelector('.popup__container_edit');
 const nameInputEdit = popupEdit.querySelector('.popup__input_type_name');
@@ -11,8 +12,6 @@ const infoButton = document.querySelector('.profile__info-button');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const elementsContainer = document.querySelector('.elements');
-const elementTitle = document.querySelector('.element__title');
-const popupPhotoContainer = document.querySelector('.popup__photo-container');
 const popupPhoto = document.querySelector('.popup__photo');
 const popupPhotoName = document.querySelector('.popup__photo-name');
 const popupOpenPhoto = document.querySelector('.popup_open-photo');
@@ -20,11 +19,6 @@ const closeButtonEdit = popupEdit.querySelector('.popup__close-button');
 const closeButtonCard = popupCard.querySelector('.popup__close-button');
 const closeButtonPhoto = popupOpenPhoto.querySelector('.popup__close-button');
 const popupButtonCard = popupCard.querySelector('.popup__button_create');
-const popupButtonEdit = popupEdit.querySelector('.popup__button_save');
-const titleCardError = popupCard.querySelector('#title-card-error');
-const linkError = popupCard.querySelector('#link-error');
-const nameError = popupEdit.querySelector('#name-error');
-const aboutError = popupEdit.querySelector('#about-error');
 
 
 const enableValidation = {
@@ -40,15 +34,14 @@ const enableValidation = {
   import { FormValidator } from './FormValidator.js'
 
 // Для каждой проверяемой формы создали экземпляр класса FormValidator
-const EditformValidator = new FormValidator(enableValidation, formElementEdit);
-const AddformValidator = new FormValidator(enableValidation, popupCard);
-EditformValidator.enableValidation();
-AddformValidator.enableValidation();
+const editFormValidator = new FormValidator(enableValidation, formElementEdit);
+const addFormValidator = new FormValidator(enableValidation, popupCard);
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
 
 
 closeButtonEdit.addEventListener('click', () => closePopup(popupEdit));
 closeButtonCard.addEventListener('click', () => closePopup(popupCard));
-  // formElementCard.reset();
 
   
 closeButtonPhoto.addEventListener('click', () => closePopup(popupOpenPhoto));
@@ -58,8 +51,7 @@ closeButtonPhoto.addEventListener('click', () => closePopup(popupOpenPhoto));
 function openPopupProfileEdit() {
   nameInputEdit.value = profileTitle.textContent;
   jobInputEdit.value = profileSubtitle.textContent;
-  popupButtonEdit.disabled = false;
-  popupButtonEdit.classList.remove('popup__button_disabled');
+  editFormValidator.resetValidator();
   openPopup(popupEdit);
 }
 
@@ -76,9 +68,16 @@ function handleProfileFormSubmit (evt) {
 formElementEdit.addEventListener('submit', handleProfileFormSubmit);
 
 
-const escKey = 'Escape';
-const closeByEscape = (event) => {
-  if (event.key === escKey) {
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+        closePopup(popup);
+      };
+  });
+});
+
+const closeByEscape = (evt) => {
+  if (evt.key === 'Escape') {
     const popupOpened = document.querySelector('.popup_opened');
     closePopup(popupOpened);
   }
@@ -125,14 +124,13 @@ import {Card} from './Card.js'
 
 // Функция добавление карточки на страницу
 const addCardPlace = (evt) => {
-  console.log('addCardPlace');
   evt.preventDefault();
   const inputTitle = titleInputCard.value;
   const inputField = linkInputCard.value;
   addCard(inputTitle, inputField);
   closePopup(popupCard);
   formElementCard.reset();
-  disabledSubmit();
+  addFormValidator.resetValidator();
 }
 
 
@@ -144,20 +142,15 @@ popupButtonCard.addEventListener('click', addCardPlace);
 
 
 const addCard = (name, link) => {
-  createCard(name, link);
   elementsContainer.prepend(createCard(name, link));
 };
 
-const disabledSubmit = () => {
-  popupButtonCard.classList.add("button__disabled");
-  popupButtonCard.disabled = true;
-};
 
 export const elementImage = (photoName, photoLink) => {
-  openPopup(popupOpenPhoto);
   popupPhotoName.textContent = photoName;
   popupPhoto.src = photoLink;
   popupPhoto.alt = photoName;
+  openPopup(popupOpenPhoto);
 };
 
 // Функция создание карточки
