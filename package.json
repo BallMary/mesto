@@ -1,0 +1,19 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "*В данной проектной работе мы организовываем свой код по JavaScript*",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BallMary/mesto.git"
+  },
+  "author": "Ball Mary",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BallMary/mesto/issues"
+  },
+  "homepage": "https://github.com/BallMary/mesto#readme"
+}

@@ -1,10 +1,9 @@
-  import { elementImage } from "./index.js";
-  
-  export class Card {
-  constructor(name, link, cardSelector) {
+export default class Card {
+  constructor(name, link, cardSelector, handleCardClick) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   };
 
     _getTemplate () {
