@@ -21,12 +21,16 @@ export default class Popup {
       }
 
     setEventListeners() {
-        this._popupSelector.forEach((popup) => {
-            popup.addEventListener('mousedown', (evt) => {
-                if (evt.target.classList.contains('popup_opened')) {
-                  close(popup);
-                };
-            });
+          this._popupSelector
+          .querySelector(".popup__close-button")
+          .addEventListener("click", () => {
+            this.close();
           });
-    }
+
+          this._popupSelector
+      .querySelector(".popup__overlay")
+      .addEventListener("click", () => {
+        this.close();
+      });
+}
 }

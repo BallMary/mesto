@@ -45,7 +45,7 @@ export default class Card {
     };
 
     _handleOpenImagePopupClick(){
-      elementImage(this._name, this._link);
+      this._handleCardClick(this._name, this._link);
   };
     
   generateCard() {
