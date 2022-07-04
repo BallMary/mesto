@@ -52,7 +52,7 @@ export default class FormValidator{
 };
 
     resetValidator() {
-        this.toggleButtonState(this._inputList, this._buttonElement);
+        this.toggleButtonState();
 
         this._inputList.forEach((inputElement) => {
             this._hideInputError(inputElement);
@@ -68,9 +68,6 @@ export default class FormValidator{
     };
 
     enableValidation() {
-        this._formElement.addEventListener("sumbit", (evt) => {
-            evt.preventDefault();
-        });
         this._setEventListeners();
     };
 };
