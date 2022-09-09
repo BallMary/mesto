@@ -6,6 +6,7 @@
     cursor: pointer;
     border: 0;
     background-color: #fff;
+    margin-bottom: 3px;
 }
 
 .element__heart:hover {

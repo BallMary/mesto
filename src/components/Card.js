@@ -1,9 +1,16 @@
 export default class Card {
-  constructor(title, link, cardSelector, handleCardClick) {
-    this._name = title;
-    this._link = link;
+  constructor(data, cardSelector, handleCardClick, handleCardDelete, handleCardLike, handleRemoveCardLike) {
+    this._name = data.name;
+    this._link = data.link;
+    this._likesCount = data.likes ? data.likes.length : 0;
+    this._likeArray = data.likes;
+    this._author = data.owner ? data.owner._id : 0;
+    this._cardId = data._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleCardDelete = handleCardDelete;
+    this._handleCardLike = handleCardLike;
+    this._handleRemoveCardLike = handleRemoveCardLike;
   };
 
     _getTemplate () {
@@ -20,14 +27,19 @@ export default class Card {
     _setEventListeners() {
       // обработчик события "поставить лайк"
       this._elementHeart = this._element.querySelector('.element__heart');
+      this._buttonRubbish =  this._element.querySelector('.element__delete');
+      
+
       this._elementHeart.addEventListener('click', () => {
         this._handleHeartClick();
       });
 
       //Обработчик события "удалить карточку"
-      this._element.querySelector('.element__delete').addEventListener('click', () => {
-        this._handleRemoveClick();
+      this._buttonRubbish.addEventListener('click', () => {
+        this._handleCardDelete(this._cardId, this._element);
     });
+
+
 
     // открытие карточки
     this._imageCard.addEventListener('click', () => {
@@ -36,13 +48,33 @@ export default class Card {
     };
 
     _handleHeartClick() {
-      this._elementHeart.classList.toggle('element__heart_active');
+      if(this.isLiked()) {
+        this._handleRemoveCardLike(this._cardId);
+        this._elementHeart.classList.remove('element__heart_active');
+      } else {
+        this._handleCardLike(this._cardId);
+        this._elementHeart.classList.toggle('element__heart_active');
+      };
     };
 
-    _handleRemoveClick() {
-      this._element.remove();
-      this._element = null;
+    isLiked() {
+      return Boolean(this._likeArray.find(item => item._id === "4770785ea931fe94cc0c3b71"));
+    }
+
+    _hideRubbish() {
+      if(this._author !== "4770785ea931fe94cc0c3b71") {
+       this._buttonRubbish.remove();
+      }
+  }
+
+  _colorHeart() {
+    if(this.isLiked()) {
+      this._elementHeart.classList.toggle('element__heart_active');
+    } else {
+      this._elementHeart.classList.remove('element__heart_active');
     };
+  };
+  
 
     _handleOpenImagePopupClick(){
       this._handleCardClick(this._name, this._link);
@@ -55,11 +87,16 @@ export default class Card {
     // Добавим слушатели
     this._imageCard =  this._element.querySelector('.element__image');
     this._setEventListeners();
+    this._hideRubbish();
+    this._colorHeart();
+    // if(this.isLiked == false) {
+    //   this._elementHeart.classList.remove('element__heart_active');)
 
     // Добавим данные в карточку
     this._imageCard.src = this._link;
     this._imageCard.alt = this._name;
     this._element.querySelector('.element__title').textContent = this._name;
+    this._element.querySelector('.element__like').textContent = this._likesCount;
     return this._element;
     };
-  };
+  }
