@@ -3,7 +3,7 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._likesCount = data.likes ? data.likes.length : 0;
-    this._likeArray = data.likes;
+    this._likeArray = data.likes ? data.likes : data.likes = [];
     this._author = data.owner ? data.owner._id : 0;
     this._cardId = data._id;
     this._cardSelector = cardSelector;
@@ -58,7 +58,7 @@ export default class Card {
     };
 
     isLiked() {
-      return Boolean(this._likeArray.find(item => item._id === "4770785ea931fe94cc0c3b71"));
+        return Boolean(this._likeArray.find(item => item._id === "4770785ea931fe94cc0c3b71"));
     }
 
     _hideRubbish() {
