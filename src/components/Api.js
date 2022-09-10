@@ -94,8 +94,6 @@ export default class Api {
     }
 
      editAvatar(avatar) {
-        console.log(avatar)
-
         return fetch(`${this.url}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
