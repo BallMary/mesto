@@ -22,6 +22,7 @@
 @import url(../blocks/element/__heart/element__heart.css);
 @import url(../blocks/element/__heart/_active/element__heart_active.css);
 @import url(../blocks/element/__delete/element__delete.css);
+@import url(../blocks/element/__delete/_inactive/element__delete_inactive.css);
 @import url(../blocks/element/__container/element__container.css);
 @import url(../blocks/element/__container-like/element__container-like.css);
 @import url(../blocks/footer/footer.css);

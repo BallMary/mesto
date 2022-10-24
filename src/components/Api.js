@@ -29,10 +29,6 @@ export default class Api {
                 authorization: `${this.authorization}`,
                 'Content-Type': 'application/json'
             },
-            // body: JSON.stringify({
-            //     name: data.name,
-            //     about: data.about
-            // })
             body: JSON.stringify(data)
             })
            .then(this._checkResponse);
@@ -101,7 +97,7 @@ export default class Api {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-avatar: avatar
+            avatar: avatar,
         }),
             })
             .then(this._checkResponse);

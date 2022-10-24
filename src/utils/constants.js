@@ -9,7 +9,8 @@ const linkAvatar = popupEditAvatar.querySelector('.popup__input_type_link');
 const popupCard = document.querySelector('.popup_card');
 const buttonPlus = document.querySelector('.profile__button');
 const infoButton = document.querySelector('.profile__info-button');
-const deleteButton = document.querySelector('.element__delete')
+const deleteButton = document.querySelector('.element__delete');
+const elementHeart = document.querySelectorAll('.element__heart');
 const avatarUser = document.querySelector('.profile__user')
 
 const nameProfile = document.querySelector('.profile__title');
@@ -19,4 +20,4 @@ const elementImage = document.querySelector('.element__image');
 const elementTitle = document.querySelector('.element__title');
 const buttonSave = popupEdit.querySelector('.popup__button_save');
 
-export { popupEdit, buttonSave, linkAvatar, avatarUser, popupEditAvatar, formElementEditAvatar, inputEditAvatar, formElementEdit, nameInputEdit, jobInputEdit, popupCard, buttonPlus, infoButton, deleteButton, nameProfile, aboutProfile, avatarProfile, elementImage, elementTitle }
+export { popupEdit, elementHeart, buttonSave, linkAvatar, avatarUser, popupEditAvatar, formElementEditAvatar, inputEditAvatar, formElementEdit, nameInputEdit, jobInputEdit, popupCard, buttonPlus, infoButton, deleteButton, nameProfile, aboutProfile, avatarProfile, elementImage, elementTitle }
