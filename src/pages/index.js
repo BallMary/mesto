@@ -11,11 +11,13 @@ import { formElementEdit, avatarUser, elementHeart, formElementEditAvatar, nameI
 import PopupWithConfirmation from '../components/PopupWithConfirmation.js';
 import Api from '../components/Api.js';
 
-const config = {
-    url: 'https://mesto.nomoreparties.co/v1/cohort-52',
-    authorization: '0052e1a2-cce0-4efd-a4a0-a96b7082b662',
-};
-const api = new Api(config);
+const api = new Api({
+    baseURL: 'https://mesto.nomoreparties.co/v1/cohort-52',
+    headers: {
+        authorization: '0052e1a2-cce0-4efd-a4a0-a96b7082b662',
+        'Content-Type': 'application/json'
+    }
+});
 const userInfo = new UserInfo(nameProfile, aboutProfile, avatarProfile);
 let userId = null;
 // Для каждой проверяемой формы создали экземпляр класса FormValidator
@@ -26,7 +28,7 @@ formValidatorEdit.enableValidation();
 formValidatorAdd.enableValidation();
 formValidatorEditAvatar.enableValidation();
 const popupImage = new PopupWithImage('.popup_open-photo');
-popupImage.setEventListeners();
+
 
 const cardsList = new Section({
     renderer: (item) => {
@@ -37,7 +39,7 @@ const cardsList = new Section({
 ".elements"
 );
 
-const renderingThePage = Promise.all([
+Promise.all([
     api.getUserInfo(),
     api.getCards(),
 ])
@@ -53,8 +55,6 @@ const renderingThePage = Promise.all([
     console.log(err);
 })
 
-renderingThePage;
-
 const openImage = (name, link) => {
     popupImage.open(name, link);
 };
@@ -62,7 +62,7 @@ const openImage = (name, link) => {
 async function handleLike(data) {
     try {
          const like = await api.likeCard(data._cardId);
-         data.clickOnHeart(like.likes.length);
+         data.clickOnHeart(like.likes);
     }
     catch(err) {
         console.log(err);
@@ -72,7 +72,7 @@ async function handleLike(data) {
 async function handleRemoveCardLike(data) {
     try {
         const like = await api.removeLikeCard(data._cardId);
-        data.clickOnHeart(like.likes.length);
+        data.clickOnHeart(like.likes);
     }
     catch(err) {
         console.log(err);
@@ -82,6 +82,7 @@ async function handleRemoveCardLike(data) {
 async function handleDelete (cardId, cardElement) {
     try {
        await api.deleteCard(cardId); 
+        this.close(); 
         cardElement.remove();
     }
     catch(err) {
@@ -92,7 +93,6 @@ async function handleDelete (cardId, cardElement) {
 const popupDeleteCard = new PopupWithConfirmation('.popup_confirm', handleDelete);
 const handleCardDelete = (cardId, cardElement) => {
     popupDeleteCard.open(cardId, cardElement);
-    popupDeleteCard.setEventListeners();
 }
 
 // Функция создание карточки
@@ -115,8 +115,10 @@ const popupEditProfile = new PopupWithForm({
     popupSelector: '.popup_edit',
     submitForm: (data) => {
             renderTextButton(true, '.popup__button_edit');
-            api.editUserInfo(data).then((data) => {
+            api.editUserInfo(data)
+            .then((data) => {
                 userInfo.setUserInfo(data.name, data.about);
+                popupEditProfile.close();
             })
             .catch ((err) => {
             console.log(err);
@@ -133,6 +135,7 @@ const popupEditAvatar = new PopupWithForm({
         renderTextButton(true, '.popup__button_avatar');
         api.editAvatar(data.avatar).then((data) => {
                 userInfo.setAvatar(data.avatar);
+                popupEditAvatar.close();
            })
         .catch ((err) => {
             console.log(err);
@@ -150,6 +153,7 @@ const popupAddCard = new PopupWithForm({
         renderTextButton(true, '.popup__button_create');
         api.addNewCard(data).then((cardData) => {
             cardsList.addItem(createCard(cardData));
+            popupAddCard.close();
         })
         .catch ((err) => {
             console.log(`При добавлении карточки:${err}`)
@@ -159,10 +163,6 @@ const popupAddCard = new PopupWithForm({
         })
     }
 });
-
-popupEditProfile.setEventListeners();
-popupAddCard.setEventListeners();
-popupEditAvatar.setEventListeners();
 
 // работа попапов(открытие)
 
@@ -184,7 +184,11 @@ buttonPlus.addEventListener('click', () => {
     popupAddCard.open();
 });
 
-
+popupImage.setEventListeners();
+popupDeleteCard.setEventListeners();
+popupEditProfile.setEventListeners();
+popupAddCard.setEventListeners();
+popupEditAvatar.setEventListeners();
 
 
 

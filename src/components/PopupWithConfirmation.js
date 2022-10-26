@@ -11,7 +11,6 @@ export default class PopupWithConfirmation extends Popup {
     _deleteHandler(evt) {
         evt.preventDefault();
         this._handleDelete(this._cardId, this._cardElement);
-        this.close();
     }
 
     open(cardId, cardElement) {

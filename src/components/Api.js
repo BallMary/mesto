@@ -1,7 +1,7 @@
 export default class Api {
-    constructor(config) {
-        this.url = config.url;
-        this.authorization = config.authorization;
+    constructor({baseURL, headers}) {
+        this.url = baseURL;
+        this._headers = headers;
     }
 
     _checkResponse(response) {
@@ -15,9 +15,7 @@ export default class Api {
     getUserInfo() {
         return fetch(`${this.url}/users/me`, {
                 method: "GET",
-                headers: {
-                    authorization: `${this.authorization}`,
-                }
+                headers: this._headers,
             })
             .then(this._checkResponse);
         };
@@ -25,11 +23,8 @@ export default class Api {
     editUserInfo(data) {
          return fetch(`${this.url}/users/me`, {
             method: 'PATCH',
-            headers: {
-                authorization: `${this.authorization}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+            headers: this._headers,
+            body: JSON.stringify(data),
             })
            .then(this._checkResponse);
     }
@@ -38,10 +33,7 @@ export default class Api {
     getCards() {
         return fetch(`${this.url}/cards`, {
                 method: "GET",
-                headers: {
-                    authorization: `${this.authorization}`,
-                    'Content-Type': 'application/json'
-                },
+                headers: this._headers,
             })
             .then(this._checkResponse);
     }
@@ -50,10 +42,7 @@ export default class Api {
     addNewCard(data) {
         return fetch(`${this.url}/cards`, {
                 method: 'POST',
-                headers: {
-                    authorization: `${this.authorization}`,
-                    'Content-Type': 'application/json'
-                },
+                headers: this._headers,
                 body: JSON.stringify(data),
                 })
                 .then(this._checkResponse);
@@ -62,9 +51,7 @@ export default class Api {
     deleteCard(cardId) {
         return fetch(`${this.url}/cards/${cardId}`, {
                 method: 'DELETE',
-                headers: {
-                    authorization: `${this.authorization}`,
-                },
+                headers: this._headers,
                 })
                 .then(this._checkResponse);
     }
@@ -72,9 +59,7 @@ export default class Api {
     likeCard(cardId) {
         return fetch(`${this.url}/cards/${cardId}/likes`, {
                  method: 'PUT',
-                headers: {
-                     authorization: `${this.authorization}`,
-                },
+                 headers: this._headers,
                 })
                 .then(this._checkResponse);
     }
@@ -82,9 +67,7 @@ export default class Api {
     removeLikeCard(cardId) {
         return fetch(`${this.url}/cards/${cardId}/likes`, {
             method: 'DELETE',
-           headers: {
-                authorization: `${this.authorization}`,
-           },
+            headers: this._headers,
            })
            .then(this._checkResponse);
     }
@@ -92,10 +75,7 @@ export default class Api {
      editAvatar(avatar) {
         return fetch(`${this.url}/users/me/avatar`, {
             method: 'PATCH',
-            headers: {
-                authorization: `${this.authorization}`,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
             avatar: avatar,
         }),

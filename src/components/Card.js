@@ -2,7 +2,6 @@ export default class Card {
   constructor(data, cardSelector, handleCardClick, handleCardDelete, handleCardLike, handleRemoveCardLike, userId) {
     this._name = data.name;
     this._link = data.link;
-    this._likesCount = data.likes ? data.likes.length : 0;
     this._likeArray = data.likes;
     this._author = data.owner._id;
     this._cardId = data._id;
@@ -31,10 +30,11 @@ export default class Card {
       this._imageCard.src = this._link;
       this._imageCard.alt = this._name;
       this._elementHeart = this._element.querySelector('.element__heart');
-      this._element.querySelector('.element__like').textContent = this._likesCount;
+      this._likeButton = this._element.querySelector('.element__like');
       this._buttonRubbish =  this._element.querySelector('.element__delete');
       this._setEventListeners();
       this.updateDeleteButtonView();
+      this.clickOnHeart(this._likeArray)
       return this._element;
       };
     
@@ -64,13 +64,14 @@ export default class Card {
       }
     }
 
-    _updateLikes(likes) {
-      this._element.querySelector('.element__like').textContent = likes;
-    };
-
     clickOnHeart(likes) {
-      this._elementHeart.classList.toggle('element__heart_active');
-      return this._updateLikes(likes);
+      this._likeArray = likes;
+      this._likeButton.textContent = this._likeArray.length;
+      if(this.isLiked()){
+        this._elementHeart.classList.add('element__heart_active');
+      } else {
+        this._elementHeart.classList.remove('element__heart_active');
+      }
   };
 
     isLiked() {
